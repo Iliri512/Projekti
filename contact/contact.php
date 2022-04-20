@@ -24,9 +24,9 @@
 		</label>
 
 		<ul class="menu">
-			<li><a href="../Homepage/home.html#">Home</a></li>
-			<li><a href="../Shop/shop.html#">Shop</a></li>
-			<li><a href="../Contact/contact.html" class="active">Contact</a></li>
+			<li><a href="../Homepage/home.php">Home</a></li>
+			<li><a href="../Shop/shop.php">Shop</a></li>
+			<li><a href="../Contact/contact.php" class="active">Contact</a></li>
 		</ul>
 
 		<div class="right-elements">
@@ -39,7 +39,7 @@
 				<i class="fas fa-shopping-bag"></i>
 			</a>
 
-			<a href="..\Login\login.html?#" class="user">
+			<a href="..\Login\login.php" class="user">
 				<i class="fas fa-user"></i>
 			</a>
 
