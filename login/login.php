@@ -1,3 +1,38 @@
+<?php
+
+include 'config.php';
+
+session_start();
+
+error_reporting(0);
+
+if (isset($_SESSION["user_id"])) {
+  header("Location: welcome.php");
+}
+
+if (isset($_POST["signup"])) {
+  $full_name = mysqli_real_escape_string($conn, $_POST["signup_full_name"]);
+  $email = mysqli_real_escape_string($conn, $_POST["signup_email"]);
+  $password = mysqli_real_escape_string($conn, md5($_POST["signup_password"]));
+  $cpassword = mysqli_real_escape_string($conn, md5($_POST["signup_cpassword"]));
+  
+  $check_email = mysqli_num_rows(mysqli_query($conn, "SELECT email FROM users WHERE email='$email'"));
+
+  if ($password !== $cpassword) {
+    echo "<script>alert('Password does not match.');</script>";
+  } elseif ($check_email > 0) {
+    echo "<script>alert('Email already exists.');</script>";
+  } else {
+    $sql = "INSERT INTO users (full_name, email, password) VALUES ('$full_name', '$email', '$password')";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+      echo "<script>alert('User registration succesesfully.');</script>";
+    }else {
+      echo "<script>alert('User registration failer.');</script>";
+    }
+  }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +62,9 @@
     </label>
 
     <ul class="menu">
-      <li><a href="../Homepage/home.html#">Home</a></li>
-      <li><a href="../Shop/shop.html#">Shop</a></li>
-      <li><a href="../Contact/contact.html">Contact</a></li>
+      <li><a href="../Homepage/index.php">Home</a></li>
+      <li><a href="../Shop/shop.php">Shop</a></li>
+      <li><a href="../Contact/contact.php">Contact</a></li>
     </ul>
 
     <div class="right-elements">
@@ -52,48 +87,38 @@
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="#" class="sign-in-form">
+          <form action="" method="post" class="sign-in-form">
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input type="text" placeholder="Email Address" name="email" value="<?php echo $_POST['email']; ?>" required />
             </div>
-            <div class="input-field">
-              <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
-            </div>
-            <input type="submit" value="Login" class="btn solid" />
-            <p class="social-text">Or Sign in with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
-          </form>
-          <form action="#" class="sign-up-form">
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required />
+          </div>
+          <input type="submit" value="Login" name="signin" class="btn solid" />
+          <p style="display: flex;justify-content: center;align-items: center;margin-top: 20px;"><a href="forgot-password.php" style="color: #4590ef;">Forgot Password?</a></p>
+        </form>
+          <form action="" class="sign-up-form" method="post">
             <h2 class="title">Sign up</h2>
             <div class="input-field">
-              <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
-            </div>
-            <div class="input-field">
-              <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div class="input-field">
-              <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
-            </div>
-            <input type="submit" class="btn" value="Sign up" />
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Full Name" name="signup_full_name" value="<?php echo $_POST["signup_full_name"]; ?>" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Email Address" name="signup_email" value="<?php echo $_POST["signup_email"]; ?>" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" name="signup_password" value="<?php echo $_POST["signup_password"]; ?>" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Confirm Password" name="signup_cpassword" value="<?php echo $_POST["signup_cpassword"]; ?>" required />
+          </div>
+          <input type="submit" class="btn" name="signup" value="Sign up" />
             <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
