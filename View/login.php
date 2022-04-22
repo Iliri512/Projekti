@@ -1,56 +1,3 @@
-<?php
-
-include 'config.php';
-
-session_start();
-
-error_reporting(0);
-
-if (isset($_SESSION["user_id"])) {
-  header("Location:../index.php");
-}
-
-if (isset($_POST["signup"])) {
-  $full_name = mysqli_real_escape_string($conn, $_POST["signup_full_name"]);
-  $email = mysqli_real_escape_string($conn, $_POST["signup_email"]);
-  $password = mysqli_real_escape_string($conn, md5($_POST["signup_password"]));
-  $cpassword = mysqli_real_escape_string($conn, md5($_POST["signup_cpassword"]));
-  
-  $check_email = mysqli_num_rows(mysqli_query($conn, "SELECT email FROM users WHERE email='$email'"));
-
-  if ($password !== $cpassword) {
-    echo "<script>alert('Password does not match.');</script>";
-  } elseif ($check_email > 0) {
-    echo "<script>alert('Email already exists.');</script>";
-  } else {
-    $sql = "INSERT INTO users (full_name, email, password) VALUES ('$full_name', '$email', '$password')";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-      $_POST["signup_full_name"] = "";
-      $_POST["signup_email"] = "";
-      $_POST["signup_password"] = "";
-      $_POST["signup_cpassword"] = "";
-      echo "<script>alert('User registration succesesfully.');</script>";
-    }else {
-      echo "<script>alert('User registration failer.');</script>";
-    }
-  }
-}
-if (isset($_POST["signin"])) {
-  $email = mysqli_real_escape_string($conn, $_POST["email"]);
-  $password = mysqli_real_escape_string($conn, md5($_POST["password"]));
-  
-  $check_email = mysqli_query($conn, "SELECT id FROM users WHERE email='$email' AND password='$password'");
-  if(mysqli_num_rows($check_email) > 0) {
-    $row = mysqli_fetch_assoc($check_email);
-    $_SESSION["user_id"] = $row['id'];
-    header("Location:index.php/..");
-  } else{
-    echo "<script>alert('Login details are incorrect. Please try again.);</script>";
-  }
-
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,43 +11,14 @@ if (isset($_POST["signin"])) {
       src="https://kit.fontawesome.com/64d58efce2.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="loginStyle.css" />
     <title>Sign in & Sign up Form</title>
   </head>
   <body>
-    <nav class="navigation">
-
-    <a href="#" class="logo">ShootShop</a>
-
-    <input type="checkbox" class="menu-btn" id="menu-btn">
-    <label for="menu-btn" class="menu-icon">
-      <span class="nav-icon">
-        <i class="fas fa-bars"></i>
-      </span>
-    </label>
-
-    <ul class="menu">
-      <li><a href="../Homepage/index.php">Home</a></li>
-      <li><a href="../Shop/shop.php">Shop</a></li>
-      <li><a href="../Contact/contact.php">Contact</a></li>
-    </ul>
-
-    <div class="right-elements">
-
-      <a href="#" class="search">
-        <i class="fas fa-search"></i>
-      </a>
-
-      <a href="#" class="cart">
-        <i class="fas fa-shopping-bag"></i>
-      </a>
-
-      <a href="..\Login\login.html?#" class="user">
-        <i class="fas fa-user"></i>
-      </a>
-
-    </div>
-  </nav>
+  <?php
+    include('../Includes/header.php');
+		include('../Controller/loginController.php');
+    ?>
   <section id="L-S-Form">
     <div class="container">
       <div class="forms-container">
@@ -109,11 +27,11 @@ if (isset($_POST["signin"])) {
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Email Address" name="email" value="<?php echo $_POST['email']; ?>" required />
+              <input type="text" placeholder="Email Address" name="email"  required />
             </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" name="password" value="<?php echo $_POST['password']; ?>" required />
+            <input type="password" placeholder="Password" name="password" required />
           </div>
           <input type="submit" value="Login" name="signin" class="btn solid" />
           <p style="display: flex;justify-content: center;align-items: center;margin-top: 20px;"><a href="forgot-password.php" style="color: #4590ef;">Forgot Password?</a></p>
@@ -122,20 +40,21 @@ if (isset($_POST["signin"])) {
             <h2 class="title">Sign up</h2>
             <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" placeholder="Full Name" name="signup_full_name" value="<?php echo $_POST["signup_full_name"]; ?>" required />
+            <input type="text" placeholder="Name" name="signup_name" required />
+          </div>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Last Name" name="signup_last_name" required />
           </div>
           <div class="input-field">
             <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="Email Address" name="signup_email" value="<?php echo $_POST["signup_email"]; ?>" required />
+            <input type="email" placeholder="Email Address" name="signup_email" required />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" name="signup_password" value="<?php echo $_POST["signup_password"]; ?>" required />
+            <input type="password" placeholder="Password" name="signup_password" required />
           </div>
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Confirm Password" name="signup_cpassword" value="<?php echo $_POST["signup_cpassword"]; ?>" required />
-          </div>
+      
           <input type="submit" class="btn" name="signup" value="Sign up" />
             <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
@@ -167,7 +86,6 @@ if (isset($_POST["signin"])) {
               Sign up
             </button>
           </div>
-          <img src="img/log.svg" class="image" alt="" />
         </div>
         <div class="panel right-panel">
           <div class="content">
@@ -180,7 +98,6 @@ if (isset($_POST["signin"])) {
               Sign in
             </button>
           </div>
-          <img src="img/register.svg" class="image" alt="" />
         </div>
       </div>
     </div>
@@ -239,6 +156,6 @@ if (isset($_POST["signin"])) {
   </footer>
   <span class="copyright">© 2021 ShootShop</span>
 
-    <script src="app.js"></script>
+    <script src="loginApp.js"></script>
   </body>
 </html>

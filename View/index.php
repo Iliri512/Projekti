@@ -1,10 +1,3 @@
-<?php
-session_start();
-
-echo $_SESSION["user_id"];
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +8,6 @@ echo $_SESSION["user_id"];
 
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-	<link rel="shortcut icon" href="fav-icon.png">
 
 	<script src="https://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
 
@@ -27,39 +19,9 @@ echo $_SESSION["user_id"];
 </head>
 
 <body>
-	<nav class="navigation">
-
-		<a href="#" class="logo">ShootShop</a>
-
-		<input type="checkbox" class="menu-btn" id="menu-btn">
-		<label for="menu-btn" class="menu-icon">
-			<span class="nav-icon">
-				<i class="fas fa-bars"></i>
-			</span>
-		</label>
-
-		<ul class="menu">
-			<li><a href="../Homepage/home.php" class="active">Home</a></li>
-			<li><a href="../Shop/shop.php">Shop</a></li>
-			<li><a href="../Contact/contact.php">Contact</a></li>
-		</ul>
-
-		<div class="right-elements">
-
-			<a href="#" class="search">
-				<i class="fas fa-search"></i>
-			</a>
-
-			<a href="#" class="cart">
-				<i class="fas fa-shopping-bag"></i>
-			</a>
-
-			<a href="..\Login\login.php" class="user">
-				<i class="fas fa-user"></i>
-			</a>
-
-		</div>
-	</nav>
+	<?php
+		include('../Includes/header.php');
+	?>
 	<section id="main">
 		<div class="main-content">
 
@@ -71,7 +33,7 @@ echo $_SESSION["user_id"];
 			</div>
 
 			<div class="main-img">
-				<img src="..\Homepage\img\1.jfif" alt="shoes">
+				<img src="../Includes/img/1.jfif" alt="shoes">
 			</div>
 		</div>
 	</section>
@@ -81,22 +43,22 @@ echo $_SESSION["user_id"];
 
 		<div class="category-container">
 			<a href="" class="category-box">
-				<img src="..\Homepage\img\box1.jpg" alt="category">
+				<img src="../Includes/img/box1.jpg" alt="category">
 				<span>Shoes</span>
 			</a>
 
 			<a href="#" class="category-box">
-				<img src="..\Homepage\img\box2.jpg" alt="category">
+				<img src="../Includes/img/box2.jpg" alt="category">
 				<span>Jersey</span>
 			</a>
 
 			<a href="#" class="category-box">
-				<img src="..\Homepage\img\box3.jpg" alt="category">
+				<img src="../Includes/img/box3.jpg" alt="category">
 				<span>Balls</span>
 			</a>
 
 			<a href="#" class="category-box">
-				<img src="..\Homepage\img\box4.jpg" alt="category">
+				<img src="../Includes/img/box4.jpg" alt="category">
 				<span>Jersey/Shorts Set</span>
 			</a>
 		</div>
@@ -112,7 +74,7 @@ echo $_SESSION["user_id"];
 			<div class="feature-product-box">
 				
 				<div class="product-feature-img">
-					<img src="..\Homepage\img\p1.jpg" alt="">
+					<img src="../Resources/productImg/p1.jpg" alt="">
 				</div>
 
 				<div class="product-feature-text-container">
@@ -130,7 +92,7 @@ echo $_SESSION["user_id"];
 			<div class="feature-product-box">
 				
 				<div class="product-feature-img">
-					<img src="..\Homepage\img\p2.jpg" alt="">
+					<img src="../Resources/productImg/p2.jpg" alt="">
 				</div>
 
 				<div class="product-feature-text-container">
@@ -149,7 +111,7 @@ echo $_SESSION["user_id"];
 			<div class="feature-product-box">
 				
 				<div class="product-feature-img">
-					<img src="..\Homepage\img\p3.jpg" alt="">
+					<img src="../Resources/productImg/p3.jpg" alt="">
 				</div>
 
 				<div class="product-feature-text-container">
@@ -168,7 +130,7 @@ echo $_SESSION["user_id"];
 			<div class="feature-product-box">
 				
 				<div class="product-feature-img">
-					<img src="..\Homepage\img\p4.jpg" alt="">
+					<img src="../Resources/productImg/p4.jpg" alt="">
 				</div>
 
 				<div class="product-feature-text-container">
@@ -196,7 +158,7 @@ echo $_SESSION["user_id"];
 		</div>
 		
 		<div class="banner-img">
-		<img src="..\Homepage\img\banner.png" alt="banner">
+		<img src="../Includes/img/banner.png" alt="banner">
 		</div>
 		
 	</section>
@@ -209,7 +171,7 @@ echo $_SESSION["user_id"];
 			
 			<div class="news-box"> 
 				<div class="news-img">
-					<img src="..\Homepage\img\n1.jpg">
+					<img src="../Includes/img/n1.jpg">
 					<div class="news-label">New</div>
 				</div>
 
@@ -222,7 +184,7 @@ echo $_SESSION["user_id"];
 
 			<div class="news-box"> 
 				<div class="news-img">
-					<img src="..\Homepage\img\n2.jpg">
+					<img src="../Includes/img/n2.jpg">
 					<div class="news-label">New</div>
 				</div>
 
@@ -235,7 +197,7 @@ echo $_SESSION["user_id"];
 
 			<div class="news-box"> 
 				<div class="news-img">
-					<img src="..\Homepage\img\n3.jpg">
+					<img src="../Includes/img/n3.jpg">
 					<div class="news-label">New</div>
 				</div>
 
